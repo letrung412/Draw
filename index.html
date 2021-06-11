@@ -1,41 +1,66 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
-    <title>Document</title>
+    <title>Draw Triangle</title>
+    <link rel="stylesheet" href="index.css">
 </head>
+
 <body>
-    <canvas id ="canvas" height="600px" width="960px" style = "border:1px solid black"> </canvas>
-    <p class = "pstyle">Nhap Ay: </p> ]
-    <input class = "input" type="text"> 
-    <br> </body>
-    <p id = "p1"> Nhap Ax:  </p>
-    <input class = "input" type="text">
-    <br> </html>
-    <button onClick = "confirm()">Confirm</button>
-    <br> </br>
-    <button onClick = "del()" >Reset </button>
+    <canvas id="canvas" height="600px" width="960px" style="border:1px solid black"> </canvas>
+    <div class="container">
+        <div class="input-field">
+            <h3>Thêm tọa độ Ax</h3>
+            <input type="number" id="ax">
+            <h3>Thêm tọa độ Ay</h3>
+            <input type="number" id="ay">
+            <h3>Thêm tọa độ Bx</h3>
+            <input type="number" id="bx">
+            <h3>Thêm tọa độ By</h3>
+            <input type="number" id="by">
+            <h3>Thêm tọa độ Cx</h3>
+            <input type="number" id="cx">
+            <h3>Thêm tọa độ Cy</h3>
+            <input type="number" id="cy">
 
-<script>
-    let canvas = document.getElementById("canvas");
-    let ctx = canvas.getContext("2d");
-    
-    function confirm() {
-        ctx.beginPath();
-        ctx.arc(300, 100, 50, 0, 2*Math.PI);
-        ctx.stroke();
-    }
+        </div>
 
-    function del() {
-        let value = document.getElementsByClassName("input");
-        value[0].value = 0;
-        value[1].value = 0;
-        console.log("1111");
-    }
-</script>
+        <div class="btn-confirm">
+            <button id='btn' onclick="soSanh()">Submit</button>
+        </div>
+    </div>
+    <script>
+        const soSanh = () => {
+            let canvas = document.getElementById("canvas");
+            let ctx = canvas.getContext("2d");
+            let btN = document.getElementById('btn')
+            let aX = document.getElementById('ax').value
+            let aY = document.getElementById('ay').value
+            let bX = document.getElementById('bx').value
+            let bY = document.getElementById('by').value
+            let cX = document.getElementById('cx').value
+            let cY = document.getElementById('cy').value
+            let AB = Math.sqrt((aX - bX) ** 2 + (aY - bY) ** 2)
+            let AC = Math.sqrt((aX - cX) ** 2 + (aY - cY) ** 2)
+            let BC = Math.sqrt((bX - cX) ** 2 + (bY - cY) ** 2)
+            console.log()
+            if (AB + AC > BC || AB + BC > AC || AC + BC > AB) {
+                ctx.beginPath();
+                ctx.moveTo(aX, aY);
+                ctx.lineTo(bX, bY);
+                ctx.lineTo(cX, cY);
+                ctx.closePath();
+                ctx.lineWidth = 10;
+                ctx.strokeStyle = '#666666';
+                ctx.stroke();
+            } else {
+                alert('Khong phai la 1 tam giac. Moi nhap lai')
+            }
+        }
+    </script>
 </body>
-</html>
 
+</html>
