@@ -6,20 +6,20 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
-    <title>triagle-draw</title>
+    <title>Document</title>
 </head>
 
 <body>
     <canvas id="myCanvas" height="300px" width="690px" style="border: 1px solid blue;"> </canvas>
-    <p class="pstyle">Nhap toa do diem Ax,Ay: </p>
+    <p class="pstyle">Nhap toa do diem A: </p>
     <input class="input" type="number" id="Ax">
     <input class="input" type="number" id="Ay">
     <br> </br>
-    <p class="pstyle">Nhap toa do diem Bx,By: </p>
+    <p class="pstyle">Nhap toa do diem B: </p>
     <input class="input" type="number" id="Bx">
     <input class="input" type="number" id="By">
     <br> </br>
-    <p class="pstyle">Nhap toa do diem Cx,Cy: </p>
+    <p class="pstyle">Nhap toa do diem C: </p>
     <input class="input" type="number" id="Cx">
     <input class="input" type="number" id="Cy">
     <br> </br>
@@ -54,10 +54,9 @@
             let bY = document.getElementById('By').value;
             let cX = document.getElementById('Cx').value;
             let cY = document.getElementById('Cy').value;
-            let AB = Math.sqrt((aX - bX) ** 2 + (aY - bY) ** 2)
-            let AC = Math.sqrt((aX - cX) ** 2 + (aY - cY) ** 2)
-            let BC = Math.sqrt((bX - cX) ** 2 + (bY - cY) ** 2)
-            let height = 200 * Math.cos(Math.PI / 6);
+            let AB = Math.sqrt(((aX - bX) ** 2) + (aY - bY) ** 2)
+            let AC = Math.sqrt(((aX - cX) ** 2) + (aY - cY) ** 2)
+            let BC = Math.sqrt(((bX - cX) ** 2) + (bY - cY) ** 2)
 
             let loop = true
             while (loop) {
@@ -65,7 +64,7 @@
                     ctx.beginPath();
                     ctx.moveTo(aX, aY);
                     ctx.lineTo(bX, bY);
-                    ctx.lineTo(cX, cY - height);
+                    ctx.lineTo(cX, cY);
                     ctx.closePath();
                     ctx.lineWidth = 10;
                     ctx.strokeStyle = 'red';
