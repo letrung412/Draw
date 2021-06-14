@@ -1,41 +1,79 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
-    <title>Document</title>
+    <title>Ball Game</title>
+    <link rel="stylesheet" href="index.css">
 </head>
+
 <body>
-    <canvas id ="canvas" height="600px" width="960px" style = "border:1px solid black"> </canvas>
-    <p class = "pstyle">Nhap Ay: </p> ]
-    <input class = "input" type="text"> 
-    <br> </body>
-    <p id = "p1"> Nhap Ax:  </p>
-    <input class = "input" type="text">
-    <br> </html>
-    <button onClick = "confirm()">Confirm</button>
-    <br> </br>
-    <button onClick = "del()" >Reset </button>
-
-<script>
-    let canvas = document.getElementById("canvas");
-    let ctx = canvas.getContext("2d");
+    <canvas id="canvas" height="400px" width="600px" style="border:1px solid black"> </canvas>
     
-    function confirm() {
-        ctx.beginPath();
-        ctx.arc(300, 100, 50, 0, 2*Math.PI);
-        ctx.stroke();
+    <script>
+        let canvas = document.getElementById("canvas");
+        let c = canvas.getContext('2d');
+
+        canvas.width = innerWidth;
+        canvas.height = innerHeight;
+
+        addEventListener("resize", function () {
+            canvas.width = innerWidth;
+            canvas.height = innerHeight;
+        });
+
+
+        class Ball {
+            constructor(x, y, dx, radius, color) {
+            this.x = x; 
+            this.y = y;
+            this.dx = 0;  //Thêm property dx
+            this.radius = radius;
+            this.color = color;
+        }
+
+        draw() {
+            c.beginPath();
+            c.arc(this.x, this.y, this.radius, 0, Math.PI * 2, false);
+            c.fillStyle = this.color;
+            c.fill();
+            c.stroke();
+            c.closePath();
+        }
+
+        move() {
+            this.x = this.x + this.dx;
+            this.draw();
+        }
     }
 
-    function del() {
-        let value = document.getElementsByClassName("input");
-        value[0].value = 0;
-        value[1].value = 0;
-        console.log("1111");
+  
+    let ball = new Ball(100, 100, 0, 40, 'red');
+    ball.draw();
+
+    //Di chuyển sang trái và phải 
+    addEventListener('keydown', function (event) {
+        if (event.keyCode == 37) {
+            console.log('Left was pressed');
+            ball.dx = -2;
+        }
+        else if (event.keyCode == 39) {
+            console.log('Right was pressed');
+            ball.dx = 2;
+        }
+    });
+
+    function animate() {
+        requestAnimationFrame(animate);
+        c.clearRect(0, 0, canvas.width, canvas.height);
+        ball.move();
     }
+
+    animate();
+  
 </script>
 </body>
-</html>
 
+</html>
