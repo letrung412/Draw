@@ -10,8 +10,8 @@
 </head>
 
 <body>
-    <canvas id="canvas" height="400px" width="600px" style="border:1px solid black"> </canvas>
-    
+    <canvas id="canvas" height="400px" width="600px" style="border:1px solid ; background-color: #eee;"> </canvas>
+
     <script>
         let canvas = document.getElementById("canvas");
         let c = canvas.getContext('2d');
@@ -26,54 +26,90 @@
 
 
         class Ball {
-            constructor(x, y, dx, radius, color) {
-            this.x = x; 
-            this.y = y;
-            this.dx = 0;  //Thêm property dx
-            this.radius = radius;
-            this.color = color;
+            constructor(x, y, dx, dy, radius, color, status) {
+                this.x = x;
+                this.y = y;
+                this.dx = 2;  //Thêm property dx
+                this.dy = -3;
+                this.radius = radius;
+                this.color = color;
+                this.dy = 2;
+                this.status = false;
+            }
+            draw() {
+                c.beginPath();
+                c.arc(this.x, this.y, this.radius, 0, Math.PI * 2, false);
+                c.fillStyle = this.color;
+                c.fill();
+                c.stroke();
+                c.closePath();
+            }
         }
-
-        draw() {
-            c.beginPath();
-            c.arc(this.x, this.y, this.radius, 0, Math.PI * 2, false);
-            c.fillStyle = this.color;
-            c.fill();
-            c.stroke();
-            c.closePath();
+        let ball = new Ball(100, 100, 0, 0, 40, 'red', true);
+        ball.draw();
+        console.log(ball.dx)
+        //Di chuyển sang trái và phải 
+        addEventListener('keydown', function (event) {
+            if (event.keyCode == 37) {
+                ball.status = true;
+                animate();
+            }
+            else if (event.keyCode == 39) {
+                ball.status = true;
+                animate();
+            }
+            else if (event.keyCode == 83) {
+                ball.status = false;
+            }
+            else if (event.keyCode == 38) {
+                ball.status = false;
+                if (event.keyCode == 38) {
+                    ball.status = true;
+                    animateAround();
+                }
+            }
+        });
+        function animate() {
+            if (ball.status == true) {
+                requestAnimationFrame(animate);
+                c.clearRect(0, 0, canvas.width, canvas.height);
+                ball.draw();
+                ball.x += ball.dx;
+                ball.y += ball.dy;
+                if (ball.x < ball.radius || ball.x > canvas.width - ball.radius) {
+                    ball.dx = -ball.dx;
+                };
+                if (ball.y < ball.radius || ball.y > canvas.height - ball.radius) {
+                    ball.dy = -ball.dy;
+                }
+            }
         }
-
-        move() {
-            this.x = this.x + this.dx;
-            this.draw();
+        function animateAround() {
+            if (ball.status == true) {
+                requestAnimationFrame(animateAround);
+                c.clearRect(0, 0, canvas.width, canvas.height);
+                ball.draw();
+                ball.x += ball.dx;
+                ball.y += ball.dy;
+                if (ball.y > canvas.height - ball.radius) {
+                    ball.y = canvas.height - ball.radius;
+                    ball.dx = 2;
+                };
+                if (ball.x > canvas.width - ball.radius) {
+                    ball.x = canvas.width - ball.radius;
+                    ball.dy = -3;
+                }
+                if (ball.y < ball.radius) {
+                    ball.y = ball.radius;
+                    ball.dx = -2;
+                };
+                if (ball.x < ball.radius) {
+                    ball.x = ball.radius;
+                    ball.dy = 2;
+                }
+            }
         }
-    }
-
-  
-    let ball = new Ball(100, 100, 0, 40, 'red');
-    ball.draw();
-
-    //Di chuyển sang trái và phải 
-    addEventListener('keydown', function (event) {
-        if (event.keyCode == 37) {
-            console.log('Left was pressed');
-            ball.dx = -2;
-        }
-        else if (event.keyCode == 39) {
-            console.log('Right was pressed');
-            ball.dx = 2;
-        }
-    });
-
-    function animate() {
-        requestAnimationFrame(animate);
-        c.clearRect(0, 0, canvas.width, canvas.height);
-        ball.move();
-    }
-
-    animate();
-  
-</script>
+    </script>
 </body>
 
 </html>
