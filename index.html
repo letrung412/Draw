@@ -33,12 +33,12 @@
                 this.dy = -3;
                 this.radius = radius;
                 this.color = color;
-                
-                this.status = false;
+
+                this.status = 2;
             }
             draw() {
                 c.beginPath();
-                c.arc(this.x, this.y, this.radius, 0, Math.PI * 2, false);
+                c.arc(this.x, this.y, this.radius, 0, Math.PI * 2, 2);
                 c.fillStyle = this.color;
                 c.fill();
                 c.stroke();
@@ -51,26 +51,24 @@
         //Di chuyển sang trái và phải 
         addEventListener('keydown', function (event) {
             if (event.keyCode == 37) {
-                ball.status = true;
+                ball.status = 1;
                 animate();
             }
             else if (event.keyCode == 39) {
-                ball.status = true;
+                ball.status = 1;
                 animate();
             }
-            else if (event.keyCode == 83) {
-                ball.status = false;
+            else if (event.keyCode == 83) { //nhan phim s de dung
+                ball.status = 2;
             }
             else if (event.keyCode == 38) {
-                ball.status = false;
-                if (event.keyCode == 38) {
-                    ball.status = true;
-                    animateAround();
-                }
+                ball.status = 3;
+                animateAround();
             }
+
         });
         function animate() {
-            if (ball.status == true) {
+            if (ball.status == 1) {
                 requestAnimationFrame(animate);
                 c.clearRect(0, 0, canvas.width, canvas.height);
                 ball.draw();
@@ -85,7 +83,7 @@
             }
         }
         function animateAround() {
-            if (ball.status == true) {
+            if (ball.status == 3) {
                 requestAnimationFrame(animateAround);
                 c.clearRect(0, 0, canvas.width, canvas.height);
                 ball.draw();
@@ -105,7 +103,7 @@
                 };
                 if (ball.x < ball.radius) {
                     ball.x = ball.radius;
-                    ball.dy = 2;
+                    ball.dy = 3;
                 }
             }
         }
